@@ -1,25 +1,29 @@
-package de.vantrex.springpaste.model;
+package de.vantrex.springpaste.model.paste;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.annotation.processing.Generated;
 import java.util.Date;
 
-@Entity
+@Document(collection = "Pastes")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Paste {
 
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @CreatedDate
-    private Date createAt;
+    private Date createdAt;
 
     @LastModifiedDate
     private Date lastModified;
@@ -28,7 +32,7 @@ public class Paste {
 
     private String content;
 
-    public Paste( String title, String content) {
+    public Paste(String title, String content) {
         this.title = title;
         this.content = content;
     }

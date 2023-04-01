@@ -1,10 +1,11 @@
 package de.vantrex.springpaste.repository;
 
-import de.vantrex.springpaste.model.Paste;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import de.vantrex.springpaste.model.paste.Paste;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PastRepository extends PagingAndSortingRepository<Paste, String> {
-
+@Repository
+public interface PasteRepository extends MongoRepository<Paste, String> {
 
 
 }
