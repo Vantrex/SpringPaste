@@ -34,12 +34,14 @@ public class PasteService {
 
 
     public Paste createPaste(final PrePaste prePaste) {
+        System.out.println("prePaste: " + prePaste);
         if (prePaste.content() == null)
             throw new RuntimeException(new PasteContentIsNullException("The content of the paste can not be null!"));
         return this.pasteRepository.findByContentAndTitle(prePaste.content(), prePaste.title())
                 .orElseGet(() -> {
                     final Paste paste = new Paste(prePaste.title(), prePaste.content());
                     paste.setCreatedAt(new Date());
+                    System.out.println("created new paste");
                     return this.pasteRepository.save(paste);
                 });
     }
