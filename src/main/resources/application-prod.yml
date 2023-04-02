@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      database: "pasteservice"
+      database: "test"
       host:  ${MONGOHOST}
       port: ${MONGOPORT}
       password: ${MONGOPASSWORD}
