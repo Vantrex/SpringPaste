@@ -1,12 +1,3 @@
 spring:
-  data:
-    mongodb:
-      database: "pastetest"
-      host: "localhost"
-      port: 27017
-server:
-  port: 8080
-paste:
-  id:
-    chars: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    length: 8
+  profiles:
+    active: prod

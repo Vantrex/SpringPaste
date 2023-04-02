@@ -1,0 +1,15 @@
+spring.profile
+spring:
+  data:
+    mongodb:
+      database: "pasteservice"
+      host:  "${MONGO_HOST}"
+      port: 27017
+      password: "${MONGO_PASS}"
+      username: "${MONGO_USER}"
+server:
+  port: 8080
+paste:
+  id:
+    chars: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    length: 8
