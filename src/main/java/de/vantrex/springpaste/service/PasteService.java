@@ -24,6 +24,8 @@ public class PasteService {
     @Value("${paste.id.length}")
     private int pasteIdLength;
 
+    @Value("${spring.data.mongodb.database")
+
     private final PasteRepository pasteRepository;
 
 
