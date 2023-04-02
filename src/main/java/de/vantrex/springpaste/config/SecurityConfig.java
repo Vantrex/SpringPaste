@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .addFilterBefore(new UsernamePasswordAuthFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new CookieAuthenticationFilter(), UsernamePasswordAuthFilter.class)
                 .csrf().disable()
-                .cors().disable()
+                .cors().disable() // disable cors
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().logout().deleteCookies(CookieAuthenticationFilter.COOKIE_NAME)
                 .and()
