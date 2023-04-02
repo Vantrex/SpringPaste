@@ -1,7 +1,11 @@
 spring:
   data:
     mongodb:
-      uri: ${MONGO_URL}
+      database: "test"
+      host:  ${MONGOHOST}
+      port: ${MONGOPORT}
+      password: ${MONGOPASSWORD}
+      username: ${MONGOUSER}
 server:
   port: 8080
 paste:
