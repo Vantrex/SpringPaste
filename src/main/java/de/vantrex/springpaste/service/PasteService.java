@@ -25,6 +25,7 @@ public class PasteService {
     private int pasteIdLength;
 
     @Value("${spring.data.mongodb.database")
+    private String database;
 
     private final PasteRepository pasteRepository;
 
@@ -36,6 +37,7 @@ public class PasteService {
 
 
     public Paste createPaste(final PrePaste prePaste) {
+        System.out.println("Database: " + database);
         System.out.println("prePaste: " + prePaste);
         if (prePaste.content() == null)
             throw new RuntimeException(new PasteContentIsNullException("The content of the paste can not be null!"));
