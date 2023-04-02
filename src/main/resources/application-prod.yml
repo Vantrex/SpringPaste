@@ -2,7 +2,7 @@ spring:
   data:
     mongodb:
       database: "pasteservice"
-      host:  "${MONGOHOST}"
+      host:  ${MONGOHOST}
       port: ${MONGOPORT}
       password: ${MONGOPASSWORD}
       username: ${MONGOUSERNAME}
