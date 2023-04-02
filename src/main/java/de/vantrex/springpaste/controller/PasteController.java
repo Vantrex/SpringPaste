@@ -7,6 +7,7 @@ import de.vantrex.springpaste.service.PasteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/paste")
+@CrossOrigin
 public class PasteController {
 
     private final PasteService pasteService;
-
 
     @Autowired
     public PasteController(PasteService pasteService) {
@@ -54,8 +55,7 @@ public class PasteController {
 }
      */
     @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Paste putPaste(@RequestBody final PrePaste prePaste) {
-        System.out.println("putting paste");
-        return this.pasteService.createPaste(prePaste);
+    public ResponseEntity<Paste> putPaste(@RequestBody final PrePaste prePaste) {
+        return ResponseEntity.ok(this.pasteService.createPaste(prePaste));
     }
 }

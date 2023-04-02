@@ -1,16 +1,16 @@
 package de.vantrex.springpaste.model.paste;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.vantrex.springpaste.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.annotation.processing.Generated;
 import java.util.Date;
 
 @Document(collection = "Pastes")
@@ -31,6 +31,9 @@ public class Paste {
     private String title;
 
     private String content;
+
+    @LastModifiedBy
+    private User user;
 
     public Paste(String title, String content) {
         this.title = title;

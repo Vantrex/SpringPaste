@@ -7,10 +7,10 @@ import de.vantrex.springpaste.model.paste.PrePaste;
 import de.vantrex.springpaste.repository.PasteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
 
@@ -36,16 +36,20 @@ public class PasteService {
     public Paste createPaste(final PrePaste prePaste) {
         if (prePaste.content() == null)
             throw new RuntimeException(new PasteContentIsNullException("The content of the paste can not be null!"));
-        final Paste paste = new Paste(prePaste.title(), prePaste.content());
-        paste.setCreatedAt(new Date());
-        return this.pasteRepository.save(paste);
+        return this.pasteRepository.findByContentAndTitle(prePaste.content(), prePaste.title())
+                .orElseGet(() -> {
+                    final Paste paste = new Paste(prePaste.title(), prePaste.content());
+                    paste.setCreatedAt(new Date());
+                    return this.pasteRepository.save(paste);
+                });
     }
+
 
     public DeleteAction deletePaste(final String pasteId) {
         final Optional<Paste> optionalPaste = this.pasteRepository.findById(pasteId);
         final DeleteAction[] action = new DeleteAction[1];
         optionalPaste.ifPresentOrElse(paste -> {
-           action[0] = DeleteAction.DELETED;
+            action[0] = DeleteAction.DELETED;
         }, () -> action[0] = DeleteAction.NOT_FOUND);
         return action[0];
     }
