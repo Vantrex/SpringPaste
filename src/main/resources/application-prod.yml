@@ -5,7 +5,7 @@ spring:
       host:  ${MONGOHOST}
       port: ${MONGOPORT}
       password: ${MONGOPASSWORD}
-      username: ${MONGOUSE}
+      username: ${MONGOUSER}
 server:
   port: 8080
 paste:
