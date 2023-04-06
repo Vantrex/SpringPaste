@@ -2,7 +2,6 @@ package de.vantrex.springpaste.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.vantrex.springpaste.model.Error;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -20,8 +19,7 @@ public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
-                         AuthenticationException authException) throws IOException, ServletException {
-        System.out.println(request.getMethod() + " -  " + authException);
+                         AuthenticationException authException) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         MAPPER.writeValue(response.getOutputStream(), new Error("Unauthorized Route"));

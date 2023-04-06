@@ -7,7 +7,6 @@ import de.vantrex.springpaste.model.paste.PrePaste;
 import de.vantrex.springpaste.repository.PasteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -24,9 +23,6 @@ public class PasteService {
     @Value("${paste.id.length}")
     private int pasteIdLength;
 
-    @Value("${spring.data.mongodb.password}")
-    private String database;
-
     private final PasteRepository pasteRepository;
 
 
@@ -37,15 +33,12 @@ public class PasteService {
 
 
     public Paste createPaste(final PrePaste prePaste) {
-        System.out.println("pass: " + database);
-        System.out.println("prePaste: " + prePaste);
         if (prePaste.content() == null)
             throw new RuntimeException(new PasteContentIsNullException("The content of the paste can not be null!"));
         return this.pasteRepository.findByContentAndTitle(prePaste.content(), prePaste.title())
                 .orElseGet(() -> {
                     final Paste paste = new Paste(prePaste.title(), prePaste.content());
                     paste.setCreatedAt(new Date());
-                    System.out.println("created new paste");
                     return this.pasteRepository.save(paste);
                 });
     }
@@ -54,9 +47,8 @@ public class PasteService {
     public DeleteAction deletePaste(final String pasteId) {
         final Optional<Paste> optionalPaste = this.pasteRepository.findById(pasteId);
         final DeleteAction[] action = new DeleteAction[1];
-        optionalPaste.ifPresentOrElse(paste -> {
-            action[0] = DeleteAction.DELETED;
-        }, () -> action[0] = DeleteAction.NOT_FOUND);
+        optionalPaste.ifPresentOrElse(paste -> action[0] = DeleteAction.DELETED,
+                () -> action[0] = DeleteAction.NOT_FOUND);
         return action[0];
     }
 
