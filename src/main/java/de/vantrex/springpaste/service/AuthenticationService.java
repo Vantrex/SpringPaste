@@ -1,5 +1,6 @@
 package de.vantrex.springpaste.service;
 
+import de.vantrex.springpaste.exception.UserCouldNotBeAuthenticatedException;
 import de.vantrex.springpaste.model.Credentials;
 import de.vantrex.springpaste.model.user.User;
 import de.vantrex.springpaste.repository.UserRepository;
@@ -35,10 +36,13 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User authenticateUser(Credentials credentials) {
+    public User authenticateUser(Credentials credentials)
+            throws UserCouldNotBeAuthenticatedException {
         final String encodedPassword = passwordEncoder.encode(credentials.password());
         return userRepository.findUserByNameAndPassword(credentials.name(), encodedPassword)
-                .orElseThrow(() -> new RuntimeException("Username or password do not match!"));
+                .orElseThrow(()
+                        -> new UserCouldNotBeAuthenticatedException(
+                                "Username or password do not match!"));
     }
 
     public String createToken(User user) {

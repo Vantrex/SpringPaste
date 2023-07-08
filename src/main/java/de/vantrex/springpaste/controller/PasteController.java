@@ -48,12 +48,6 @@ public class PasteController {
         return ResponseEntity.status(deleteAction.getHttpStatus()).build();
     }
 
-    /*
-    {
-    "title": "Test",
-    "content": "Das hier ist ein Test Content BLABLABLA"
-}
-     */
     @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Paste> putPaste(@RequestBody final PrePaste prePaste) {
         return ResponseEntity.ok(this.pasteService.createPaste(prePaste));
