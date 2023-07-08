@@ -1,3 +1,6 @@
 spring:
   profiles:
     active: prod
+
+paste:
+  max-alive-hours: 20
