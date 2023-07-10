@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class PasteController {
         this.pasteService = pasteService;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Paste>> getPastes() {
         return ResponseEntity.ok(this.pasteService.getPasteRepository().findAll());
     }
@@ -51,5 +52,15 @@ public class PasteController {
     @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Paste> putPaste(@RequestBody final PrePaste prePaste) {
         return ResponseEntity.ok(this.pasteService.createPaste(prePaste));
+    }
+
+    @GetMapping(path = "/search/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title) {
+        return ResponseEntity.ok(this.pasteService.getPasteRepository().findAllByTitleIsLikeIgnoreCase(title));
+    }
+
+    @GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Paste>> listPastes(@RequestBody final Date date) {
+        return ResponseEntity.ok(this.pasteService.getPasteRepository().findAllByCreatedAtAfter(date));
     }
 }
