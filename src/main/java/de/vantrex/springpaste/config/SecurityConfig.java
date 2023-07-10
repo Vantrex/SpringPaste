@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/paste").permitAll()
                 .requestMatchers(HttpMethod.GET, "/paste/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/paste/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/paste/search/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/paste/search/**").permitAll()
                 .anyRequest().authenticated();
         return http.build();
     }
