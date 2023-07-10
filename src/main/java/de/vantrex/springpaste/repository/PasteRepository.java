@@ -16,9 +16,9 @@ public interface PasteRepository extends MongoRepository<Paste, String> {
 
     List<Paste> findAllByLastModifiedBefore(Date date);
 
-    List<Paste> findAllByCreatedAtAfter(Date date);
+    List<Paste> findFirst10ByCreatedAtIsAfter(Date date);
 
-    List<Paste> findAllByTitleIsLikeIgnoreCase(String title);
+    List<Paste> findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(String title, Date date);
 
 
 }
