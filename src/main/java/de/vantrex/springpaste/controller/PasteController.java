@@ -55,12 +55,12 @@ public class PasteController {
     }
 
     @GetMapping(path = "/search/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title, @RequestBody Date date) {
-        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(title, date));
+    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title, @RequestBody long date) {
+        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(title, new Date(date)));
     }
 
     @GetMapping(path = "/list-by-date", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Paste>> listPastes(@RequestBody final Date date) {
-        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByCreatedAtIsAfter(date));
+    public ResponseEntity<List<Paste>> listPastes(@RequestBody final long date) {
+        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByCreatedAtIsAfter(new Date(date)));
     }
 }
