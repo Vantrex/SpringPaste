@@ -8,14 +8,7 @@ import de.vantrex.springpaste.service.PasteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -55,13 +48,13 @@ public class PasteController {
         return ResponseEntity.ok(this.pasteService.createPaste(prePaste));
     }
 
-    @GetMapping(path = "/search/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title, @RequestBody DateReqestBody date) {
-        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(title, date.date()));
+    @GetMapping(path = "/search/{title}", params = "date", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title, @RequestParam(name = "date") long date) {
+        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(title, new Date(date)));
     }
 
-    @GetMapping(path = "/list-by-date", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Paste>> listPastes(@RequestBody final long date) {
+    @GetMapping(path = "/list-by-date", params = "date", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Paste>> listPastes(@RequestParam(name = "date") final long date) {
         return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByCreatedAtIsAfter(new Date(date)));
     }
 }
