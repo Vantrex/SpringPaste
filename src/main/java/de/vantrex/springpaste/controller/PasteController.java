@@ -1,5 +1,6 @@
 package de.vantrex.springpaste.controller;
 
+import de.vantrex.springpaste.model.DateReqestBody;
 import de.vantrex.springpaste.model.DeleteAction;
 import de.vantrex.springpaste.model.paste.Paste;
 import de.vantrex.springpaste.model.paste.PrePaste;
@@ -55,8 +56,8 @@ public class PasteController {
     }
 
     @GetMapping(path = "/search/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title, @RequestBody long date) {
-        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(title, new Date(date)));
+    public ResponseEntity<List<Paste>> findAllByTitle(@PathVariable(name = "title") String title, @RequestBody DateReqestBody date) {
+        return ResponseEntity.ok(this.pasteService.getPasteRepository().findFirst10ByTitleIsLikeIgnoreCaseAndCreatedAtAfter(title, date.date()));
     }
 
     @GetMapping(path = "/list-by-date", produces = MediaType.APPLICATION_JSON_VALUE)
